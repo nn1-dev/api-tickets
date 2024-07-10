@@ -14,7 +14,10 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     ...body,
   };
 
-  await kv.set([PREFIX, crypto.randomUUID()], data);
+  // TODO: Think about something better dude
+  const temp_event_id = 3;
+
+  await kv.set([PREFIX, temp_event_id, body.email], data);
 
   const email = renderEmailSignupConfirm({ url: "" });
 
