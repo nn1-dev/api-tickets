@@ -1,5 +1,6 @@
 import handlerDelete from "./handlerDelete.ts";
 import handlerPost from "./handlerPost.ts";
+import handlerPut from "./handlerPut.ts";
 import handlerGet from "./handlerGet.ts";
 
 const kv = await Deno.openKv();
@@ -7,6 +8,7 @@ const kv = await Deno.openKv();
 const HANDLER_MAPPER = {
   GET: handlerGet,
   POST: handlerPost,
+  PUT: handlerPut,
   DELETE: handlerDelete,
 };
 

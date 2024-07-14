@@ -11,10 +11,9 @@ const style = {
   },
   text: {
     color: "#f8f7ff",
-    fontSize: "16px",
-    fontFamily: "HelveticaNeue,Helvetica,Arial,sans-serif",
-    lineHeight: "28px",
     margin: "0 0 28px",
+    fontSize: "16px",
+    lineHeight: "28px",
   },
   hr: {
     borderColor: "#29282e",
@@ -26,6 +25,12 @@ const style = {
     padding: "14px 28px",
     margin: "0 0 28px",
     borderRadius: "4px",
+    fontSize: "16px",
+    lineHeight: "28px",
+  },
+  link: {
+    color: "#ddc2a5",
+    textDecoration: "underline",
   },
 };
 

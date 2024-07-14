@@ -1,29 +1,104 @@
 import { Resend } from "npm:resend";
-import { PREFIX } from "./constants.ts";
+import { PREFIX_TICKET, PREFIX_TOKEN } from "./constants.ts";
+import { normalizeName, normalizeEmail } from "./utils.ts";
 import { renderEmailSignupConfirm } from "./emails/signup-confirm.tsx";
+import { renderEmailSignupSuccess } from "./emails/signup-success.tsx";
 
 const resend = new Resend(Deno.env.get("API_KEY_RESEND"));
 
 const handlerPost = async (request: Request, kv: Deno.Kv) => {
   const body: {
+    eventId: number;
+    eventUrl: string;
+    eventName: string;
+    eventDate: string;
+    eventLocation: string;
     name: string;
     email: string;
   } = await request.json();
-  const data = {
-    timestamp: new Date().toISOString(),
-    ...body,
-  };
 
-  // TODO: Think about something better dude
-  const temp_event_id = 3;
+  const normalizedBodyName = normalizeName(body.name);
+  const normalizedBodyEmail = normalizeEmail(body.email);
 
-  await kv.set([PREFIX, temp_event_id, body.email], data);
+  const entriesTickets = kv.list<KvEntryTicket>({
+    prefix: [PREFIX_TICKET],
+  });
+  const entriesTicketsArray = await Array.fromAsync(entriesTickets);
+  const emailPreviouslyConfirmed = entriesTicketsArray.some(
+    ({ value }) => value.email === normalizedBodyEmail && value.confirmed,
+  );
+  if (emailPreviouslyConfirmed) {
+    await kv.set([PREFIX_TICKET, body.eventId, normalizedBodyEmail], {
+      timestamp: new Date().toISOString(),
+      eventId: body.eventId,
+      name: normalizedBodyName,
+      email: normalizedBodyEmail,
+      confirmed: true,
+    });
 
-  const email = renderEmailSignupConfirm({ url: "" });
+    const email = renderEmailSignupSuccess({
+      eventUrl: body.eventUrl,
+      eventName: body.eventName,
+      eventDate: body.eventDate,
+      eventLocation: body.eventLocation,
+    });
+
+    const { error } = await resend.emails.send({
+      from: "NN1 Dev Club <club@nn1.dev>",
+      to: normalizedBodyEmail,
+      subject: body.eventName,
+      html: email.html,
+      text: email.text,
+    });
+
+    if (error) {
+      return Response.json(
+        {
+          status: "error",
+          statusCode: 400,
+          data: null,
+          error,
+        },
+        { status: 400 },
+      );
+    }
+
+    return Response.json(
+      {
+        status: "success",
+        statusCode: 200,
+        value: body,
+        error: null,
+      },
+      { status: 200 },
+    );
+  }
+
+  const token = crypto.randomUUID();
+
+  await Promise.all([
+    kv.set([PREFIX_TICKET, body.eventId, normalizeEmail(body.email)], {
+      timestamp: new Date().toISOString(),
+      eventId: body.eventId,
+      name: normalizedBodyName,
+      email: normalizeEmail(body.email),
+      token,
+      confirmed: false,
+    }),
+    kv.set([PREFIX_TOKEN, token], {
+      eventId: body.eventId,
+      email: normalizeEmail(body.email),
+    }),
+  ]);
+
+  const email = renderEmailSignupConfirm({
+    eventName: body.eventName,
+    url: `https://nn1.dev/events/${body.eventId}/ticket?token=${token}`,
+  });
 
   const { error } = await resend.emails.send({
     from: "NN1 Dev Club <club@nn1.dev>",
-    to: body.email,
+    to: normalizeEmail(body.email),
     subject: "Confirm your email please",
     html: email.html,
     text: email.text,
@@ -44,11 +119,11 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
   return Response.json(
     {
       status: "success",
-      statusCode: 200,
-      data,
+      statusCode: 201,
+      data: body,
       error: null,
     },
-    { status: 200 },
+    { status: 201 },
   );
 };
 

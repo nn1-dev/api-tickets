@@ -9,6 +9,7 @@
       "npm:@react-email/hr": "npm:@react-email/hr@0.0.8_react@18.3.1",
       "npm:@react-email/html": "npm:@react-email/html@0.0.8_react@18.3.1",
       "npm:@react-email/img": "npm:@react-email/img@0.0.8_react@18.3.1",
+      "npm:@react-email/link": "npm:@react-email/link@0.0.8_react@18.3.1",
       "npm:@react-email/render": "npm:@react-email/render@0.0.15_react@18.3.1",
       "npm:@react-email/text": "npm:@react-email/text@0.0.8_react@18.3.1",
       "npm:react": "npm:react@18.3.1",
@@ -72,6 +73,12 @@
       },
       "@react-email/img@0.0.8_react@18.3.1": {
         "integrity": "sha512-jx/rPuKo31tV18fu7P5rRqelaH5wkhg83Dq7uLwJpfqhbi4KFBGeBfD0Y3PiLPPoh+WvYf+Adv9W2ghNW8nOMQ==",
+        "dependencies": {
+          "react": "react@18.3.1"
+        }
+      },
+      "@react-email/link@0.0.8_react@18.3.1": {
+        "integrity": "sha512-nVikuTi8WJHa6Baad4VuRUbUCa/7EtZ1Qy73TRejaCHn+vhetc39XGqHzKLNh+Z/JFL8Hv9g+4AgG16o2R0ogQ==",
         "dependencies": {
           "react": "react@18.3.1"
         }
