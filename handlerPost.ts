@@ -108,7 +108,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
 
   const email = renderEmailSignupConfirm({
     eventName: body.eventName,
-    url: `https://nn1.dev/events/${body.eventId}/ticket?token=${token}`,
+    url: `https://nn1.dev/events/${body.eventId}/${token}`,
   });
 
   const { error } = await resend.emails.send({
