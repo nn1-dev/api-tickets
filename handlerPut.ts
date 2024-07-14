@@ -1,6 +1,7 @@
 import { Resend } from "npm:resend";
 import { PREFIX_TICKET, PREFIX_TOKEN } from "./constants.ts";
 import { renderEmailSignupSuccess } from "./emails/signup-success.tsx";
+import { renderEmailAdminSignupSuccess } from "./emails/admin-signup-success.tsx";
 
 const resend = new Resend(Deno.env.get("API_KEY_RESEND"));
 
@@ -61,28 +62,43 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     await kv.delete([PREFIX_TOKEN, body.token]),
   ]);
 
-  const email = renderEmailSignupSuccess({
-    eventUrl: body.eventUrl,
-    eventName: body.eventName,
-    eventDate: body.eventDate,
-    eventLocation: body.eventLocation,
-  });
+  const [emailUser, emailAdmin] = [
+    renderEmailSignupSuccess({
+      eventUrl: body.eventUrl,
+      eventName: body.eventName,
+      eventDate: body.eventDate,
+      eventLocation: body.eventLocation,
+    }),
+    renderEmailAdminSignupSuccess({
+      name: ticket.value.name,
+      email: ticket.value.email,
+    }),
+  ];
 
-  const { error } = await resend.emails.send({
-    from: "NN1 Dev Club <club@nn1.dev>",
-    to: ticket.value.email,
-    subject: body.eventName,
-    html: email.html,
-    text: email.text,
-  });
+  const [emailUserResponse, emailAdminResponse] = await Promise.all([
+    resend.emails.send({
+      from: "NN1 Dev Club <club@nn1.dev>",
+      to: ticket.value.email,
+      subject: body.eventName,
+      html: emailUser.html,
+      text: emailUser.text,
+    }),
+    resend.emails.send({
+      from: "NN1 Dev Club <club@nn1.dev>",
+      to: "club@nn1.dev",
+      subject: "New signup",
+      html: emailAdmin.html,
+      text: emailAdmin.text,
+    }),
+  ]);
 
-  if (error) {
+  if (emailUserResponse.error || emailAdminResponse.error) {
     return Response.json(
       {
         status: "error",
         statusCode: 400,
         data: null,
-        error,
+        error: emailUserResponse.error || emailAdminResponse.error,
       },
       { status: 400 },
     );

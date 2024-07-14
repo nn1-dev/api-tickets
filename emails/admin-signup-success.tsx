@@ -50,10 +50,12 @@ EmailAdminSignupSuccess.PreviewProps = {
   email: "hey@ho.hi",
 } as EmailAdminSignupSuccessProps;
 
-const renderEmailSignupSuccess = (props: EmailAdminSignupSuccessProps) => ({
+const renderEmailAdminSignupSuccess = (
+  props: EmailAdminSignupSuccessProps,
+) => ({
   html: render(<EmailAdminSignupSuccess {...props} />),
   text: render(<EmailAdminSignupSuccess {...props} />, { plainText: true }),
 });
 
 export default EmailAdminSignupSuccess;
-export { renderEmailSignupSuccess };
+export { renderEmailAdminSignupSuccess };
