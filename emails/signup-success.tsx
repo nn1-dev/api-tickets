@@ -26,7 +26,7 @@ export const EmailSignupSuccess = ({
   <Html>
     <Head />
     <Body style={style.body}>
-      <Container>
+      <Container style={style.container}>
         <Img
           src="https://nn1.dev/logo-email.png"
           width="119"
@@ -49,12 +49,8 @@ export const EmailSignupSuccess = ({
           📍 {eventLocation}
           <br />
           <br />
-          If you have issues or questions, please reply to this email, send us a
-          new one to{" "}
-          <Link style={style.link} href="mailto:club@nn1.dev">
-            club@nn1.dev
-          </Link>
-          , or reach out to us on social media channels:{" "}
+          If you have issues or questions, please reply to this email, or reach
+          out to us on social media channels:{" "}
           <Link style={style.link} href="http://linkedin.com/company/nn1-dev">
             LinkedIn
           </Link>
@@ -78,7 +74,7 @@ export const EmailSignupSuccess = ({
 EmailSignupSuccess.PreviewProps = {
   eventUrl: "https://nn1.dev",
   eventName:
-    '#1: "Boiling Nemo" by PJ Evans and "The Science of Software Engineering" by Junade Ali',
+    '#2: "Design Secrets for Developers" by Thomas Reeve and "Type-safe localization of Unsplash.com" by Oliver Ash',
   eventDate: "Wednesday, 27/03/2024, 18:00",
   eventLocation: "Vulcan Works, 34-38 Guildhall Rd, Northampton, NN1 1EW",
 } as EmailSignupSuccessProps;

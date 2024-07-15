@@ -6,6 +6,9 @@ const style = {
     padding: "56px 28px",
     margin: "0",
   },
+  container: {
+    maxWidth: "600px",
+  },
   img: {
     margin: "0 0 56px",
   },

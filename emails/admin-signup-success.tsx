@@ -5,6 +5,7 @@ import { Container } from "npm:@react-email/container";
 import { Img } from "npm:@react-email/img";
 import { Text } from "npm:@react-email/text";
 import { Hr } from "npm:@react-email/hr";
+import { Link } from "npm:@react-email/link";
 import { render } from "npm:@react-email/render";
 import style from "./style.tsx";
 
@@ -20,7 +21,7 @@ export const EmailAdminSignupSuccess = ({
   <Html>
     <Head />
     <Body style={style.body}>
-      <Container>
+      <Container style={style.container}>
         <Img
           src="https://nn1.dev/logo-email.png"
           width="119"
@@ -28,17 +29,15 @@ export const EmailAdminSignupSuccess = ({
           alt="NN1 Dev Club Logo"
           style={style.img}
         />
-        <Text style={style.text}>New signup.</Text>
+        <Text style={style.text}>New signup ✨</Text>
         <Hr style={style.hr} />
         <Text style={style.text}>
-          <strong>Name:</strong>
+          <strong>Name:</strong> {name}
           <br />
-          {name}
-          <br />
-          <br />
-          <strong>Email:</strong>
-          <br />
-          {email}
+          <strong>Email:</strong>{" "}
+          <Link href={`mailto:${email}`} style={style.link}>
+            {email}
+          </Link>
         </Text>
       </Container>
     </Body>

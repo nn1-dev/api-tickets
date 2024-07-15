@@ -21,7 +21,7 @@ export const EmailSignupConfirm = ({
   <Html>
     <Head />
     <Body style={style.body}>
-      <Container>
+      <Container style={style.container}>
         <Img
           src="https://nn1.dev/logo-email.png"
           width="119"
@@ -39,12 +39,8 @@ export const EmailSignupConfirm = ({
           Confirm your email
         </Button>
         <Text style={style.text}>
-          If you have issues or questions, please reply to this email, send us a
-          new one to{" "}
-          <Link style={style.link} href="mailto:club@nn1.dev">
-            club@nn1.dev
-          </Link>
-          , or reach out to us on social media channels:{" "}
+          If you have issues or questions, please reply to this email, or reach
+          out to us on social media channels:{" "}
           <Link style={style.link} href="http://linkedin.com/company/nn1-dev">
             LinkedIn
           </Link>
