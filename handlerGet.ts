@@ -1,8 +1,21 @@
 import { PREFIX } from "./constants.ts";
 
 const handlerGet = async (_request: Request, kv: Deno.Kv) => {
-  const ticketsIterator = kv.list<KvEntryTicket>({ prefix: [PREFIX] });
-  const tickets = await Array.fromAsync(ticketsIterator);
+  const pattern = new URLPattern({
+    pathname: "/:eventId?/:ticketId?",
+  });
+  const patternResult = pattern.exec(_request.url);
+  const eventId = patternResult?.pathname.groups.eventId;
+  const ticketId = patternResult?.pathname.groups.ticketId;
+  const key = [PREFIX, Number(eventId), ticketId].filter(Boolean) as (
+    | string
+    | number
+  )[];
+
+  // const ticketsIterator = kv.list<KvEntryTicket>({ prefix });
+  const tickets = ticketId
+    ? await kv.get<KvEntryTicket>(key)
+    : await Array.fromAsync(kv.list<KvEntryTicket>({ prefix: key }));
 
   return Response.json(
     {
