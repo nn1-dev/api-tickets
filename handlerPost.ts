@@ -1,5 +1,6 @@
+import { ulid } from "https://deno.land/x/ulid@v0.3.0/mod.ts";
 import { Resend } from "npm:resend";
-import { PREFIX_TICKET, PREFIX_TOKEN } from "./constants.ts";
+import { PREFIX } from "./constants.ts";
 import { normalizeName, normalizeEmail } from "./utils.ts";
 import { renderEmailSignupConfirm } from "./emails/signup-confirm.tsx";
 import { renderEmailSignupSuccess } from "./emails/signup-success.tsx";
@@ -9,27 +10,26 @@ const resend = new Resend(Deno.env.get("API_KEY_RESEND"));
 
 const handlerPost = async (request: Request, kv: Deno.Kv) => {
   const body: {
+    name: string;
+    email: string;
     eventId: number;
-    eventUrl: string;
     eventName: string;
     eventDate: string;
     eventLocation: string;
-    name: string;
-    email: string;
   } = await request.json();
 
   const normalizedBodyName = normalizeName(body.name);
   const normalizedBodyEmail = normalizeEmail(body.email);
 
-  const entriesTickets = kv.list<KvEntryTicket>({
-    prefix: [PREFIX_TICKET],
+  const ticketsIterator = kv.list<KvEntryTicket>({
+    prefix: [PREFIX],
   });
-  const entriesTicketsArray = await Array.fromAsync(entriesTickets);
-  const emailPreviouslyConfirmed = entriesTicketsArray.some(
+  const tickets = await Array.fromAsync(ticketsIterator);
+  const emailPreviouslyConfirmed = tickets.some(
     ({ value }) => value.email === normalizedBodyEmail && value.confirmed,
   );
   if (emailPreviouslyConfirmed) {
-    await kv.set([PREFIX_TICKET, body.eventId, normalizedBodyEmail], {
+    await kv.set([PREFIX, body.eventId, ulid()], {
       timestamp: new Date().toISOString(),
       eventId: body.eventId,
       name: normalizedBodyName,
@@ -39,7 +39,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
 
     const [emailUser, emailAdmin] = [
       renderEmailSignupSuccess({
-        eventUrl: body.eventUrl,
+        eventUrl: `https://nn1.dev/events/${body.eventId}`,
         eventName: body.eventName,
         eventDate: body.eventDate,
         eventLocation: body.eventLocation,
@@ -89,31 +89,26 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     );
   }
 
-  const token = crypto.randomUUID();
+  const ticketId = ulid();
+  const ticketToken = crypto.randomUUID();
 
-  await Promise.all([
-    kv.set([PREFIX_TICKET, body.eventId, normalizeEmail(body.email)], {
-      timestamp: new Date().toISOString(),
-      eventId: body.eventId,
-      name: normalizedBodyName,
-      email: normalizeEmail(body.email),
-      token,
-      confirmed: false,
-    }),
-    kv.set([PREFIX_TOKEN, token], {
-      eventId: body.eventId,
-      email: normalizeEmail(body.email),
-    }),
-  ]);
+  await kv.set([PREFIX, body.eventId, ticketId], {
+    timestamp: new Date().toISOString(),
+    eventId: body.eventId,
+    name: normalizedBodyName,
+    email: normalizedBodyEmail,
+    token: ticketToken,
+    confirmed: false,
+  });
 
   const email = renderEmailSignupConfirm({
     eventName: body.eventName,
-    url: `https://nn1.dev/events/${body.eventId}/${token}`,
+    url: `https://nn1.dev/events/${body.eventId}/${ticketId}/${ticketToken}`,
   });
 
   const { error } = await resend.emails.send({
     from: "NN1 Dev Club <club@nn1.dev>",
-    to: normalizeEmail(body.email),
+    to: normalizedBodyEmail,
     subject: "Confirm your email please",
     html: email.html,
     text: email.text,

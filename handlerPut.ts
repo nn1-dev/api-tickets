@@ -1,5 +1,5 @@
 import { Resend } from "npm:resend";
-import { PREFIX_TICKET, PREFIX_TOKEN } from "./constants.ts";
+import { PREFIX } from "./constants.ts";
 import { renderEmailSignupSuccess } from "./emails/signup-success.tsx";
 import { renderEmailAdminSignupSuccess } from "./emails/admin-signup-success.tsx";
 
@@ -7,64 +7,42 @@ const resend = new Resend(Deno.env.get("API_KEY_RESEND"));
 
 const handlerPut = async (request: Request, kv: Deno.Kv) => {
   const body: {
-    token: ReturnType<typeof crypto.randomUUID>;
-    eventUrl: string;
+    ticketId: string;
+    ticketToken: ReturnType<typeof crypto.randomUUID>;
+    eventId: number;
     eventName: string;
     eventDate: string;
     eventLocation: string;
   } = await request.json();
 
-  const token = await kv.get<KvEntryToken>([PREFIX_TOKEN, body.token]);
-
-  if (!token.value) {
-    return Response.json(
-      {
-        status: "error",
-        statusCode: 400,
-        value: null,
-        error: "Invalid token.",
-      },
-      { status: 400 },
-    );
-  }
-
   const ticket = await kv.get<KvEntryTicket>([
-    PREFIX_TICKET,
-    token.value.eventId,
-    token.value.email,
+    PREFIX,
+    body.eventId,
+    body.ticketId,
   ]);
 
-  if (!ticket.value) {
+  if (!ticket.value || ticket.value.token !== body.ticketToken) {
     return Response.json(
       {
         status: "error",
         statusCode: 400,
         value: null,
-        error: "Invalid ticket.",
+        error: "Invalid request.",
       },
       { status: 400 },
     );
   }
 
-  const ticketNew = {
-    timestamp: ticket.value.timestamp,
-    id: ticket.value.id,
-    name: ticket.value.name,
-    email: ticket.value.email,
+  const { token, ...rest } = ticket.value;
+  const newValue = {
+    ...rest,
     confirmed: true,
   };
-
-  await Promise.all([
-    await kv.set(
-      [PREFIX_TICKET, token.value.eventId, token.value.email],
-      ticketNew,
-    ),
-    await kv.delete([PREFIX_TOKEN, body.token]),
-  ]);
+  await kv.set([PREFIX, body.eventId, body.ticketId], newValue);
 
   const [emailUser, emailAdmin] = [
     renderEmailSignupSuccess({
-      eventUrl: body.eventUrl,
+      eventUrl: `https://nn1.dev/events/${body.eventId}`,
       eventName: body.eventName,
       eventDate: body.eventDate,
       eventLocation: body.eventLocation,
@@ -74,7 +52,6 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
       email: ticket.value.email,
     }),
   ];
-
   const [emailUserResponse, emailAdminResponse] = await Promise.all([
     resend.emails.send({
       from: "NN1 Dev Club <club@nn1.dev>",
@@ -91,7 +68,6 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
       text: emailAdmin.text,
     }),
   ]);
-
   if (emailUserResponse.error || emailAdminResponse.error) {
     return Response.json(
       {
@@ -103,12 +79,11 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
       { status: 400 },
     );
   }
-
   return Response.json(
     {
       status: "success",
       statusCode: 200,
-      value: ticketNew,
+      value: newValue,
       error: null,
     },
     { status: 200 },

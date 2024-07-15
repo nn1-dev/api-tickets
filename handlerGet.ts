@@ -1,23 +1,14 @@
-import { PREFIX_TICKET, PREFIX_TOKEN } from "./constants.ts";
+import { PREFIX } from "./constants.ts";
 
 const handlerGet = async (_request: Request, kv: Deno.Kv) => {
-  const [entriesTickets, entriesTokens] = [
-    kv.list<KvEntryTicket>({ prefix: [PREFIX_TICKET] }),
-    kv.list<KvEntryToken>({ prefix: [PREFIX_TOKEN] }),
-  ];
-  const [responseTickets, responseTokens] = await Promise.all([
-    Array.fromAsync(entriesTickets),
-    Array.fromAsync(entriesTokens),
-  ]);
+  const ticketsIterator = kv.list<KvEntryTicket>({ prefix: [PREFIX] });
+  const tickets = await Array.fromAsync(ticketsIterator);
 
   return Response.json(
     {
       status: "success",
       statusCode: 200,
-      data: {
-        tickets: responseTickets,
-        tokens: responseTokens,
-      },
+      data: tickets,
       error: null,
     },
     { status: 200 },
