@@ -63,7 +63,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     resend.emails.send({
       from: "NN1 Dev Club <club@nn1.dev>",
       to: "club@nn1.dev",
-      subject: "New signup",
+      subject: "🎉 New signup",
       html: emailAdmin.html,
       text: emailAdmin.text,
     }),
