@@ -34,11 +34,11 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     return Response.json(
       {
         status: "success",
-        statusCode: 200,
+        statusCode: 201,
         data: ticketExist,
         error: null,
       },
-      { status: 200 },
+      { status: 201 },
     );
   }
 
@@ -110,11 +110,11 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     return Response.json(
       {
         status: "success",
-        statusCode: 200,
+        statusCode: 201,
         data: newTicket,
         error: null,
       },
-      { status: 200 },
+      { status: 201 },
     );
   }
 
