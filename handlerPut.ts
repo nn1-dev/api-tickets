@@ -83,7 +83,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     {
       status: "success",
       statusCode: 200,
-      value: newValue,
+      data: newValue,
       error: null,
     },
     { status: 200 },

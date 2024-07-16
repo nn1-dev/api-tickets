@@ -35,7 +35,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       {
         status: "success",
         statusCode: 200,
-        value: ticketExist,
+        data: ticketExist,
         error: null,
       },
       { status: 200 },
@@ -111,7 +111,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       {
         status: "success",
         statusCode: 200,
-        value: newTicket,
+        data: newTicket,
         error: null,
       },
       { status: 200 },
