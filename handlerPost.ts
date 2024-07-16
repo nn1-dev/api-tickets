@@ -25,9 +25,27 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     prefix: [PREFIX],
   });
   const tickets = await Array.fromAsync(ticketsIterator);
+
+  const ticketExist = tickets.find(
+    ({ value }) =>
+      value.email === normalizedBodyEmail && value.eventId === body.eventId,
+  );
+  if (ticketExist) {
+    return Response.json(
+      {
+        status: "success",
+        statusCode: 200,
+        value: ticketExist,
+        error: null,
+      },
+      { status: 200 },
+    );
+  }
+
   const emailPreviouslyConfirmed = tickets.some(
     ({ value }) => value.email === normalizedBodyEmail && value.confirmed,
   );
+
   if (emailPreviouslyConfirmed) {
     await kv.set([PREFIX, body.eventId, ulid()], {
       timestamp: new Date().toISOString(),
@@ -78,11 +96,22 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       );
     }
 
+    const curentEventTicketsiterator = kv.list<KvEntryTicket>({
+      prefix: [PREFIX, body.eventId],
+    });
+    const currentEventTickets = await Array.fromAsync(
+      curentEventTicketsiterator,
+    );
+    const newTicket = currentEventTickets.find(
+      ({ value }) =>
+        value.email === normalizedBodyEmail && value.eventId === body.eventId,
+    );
+
     return Response.json(
       {
         status: "success",
         statusCode: 200,
-        value: body,
+        value: newTicket,
         error: null,
       },
       { status: 200 },
@@ -126,11 +155,20 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     );
   }
 
+  const curentEventTicketsiterator = kv.list<KvEntryTicket>({
+    prefix: [PREFIX, body.eventId],
+  });
+  const currentEventTickets = await Array.fromAsync(curentEventTicketsiterator);
+  const newTicket = currentEventTickets.find(
+    ({ value }) =>
+      value.email === normalizedBodyEmail && value.eventId === body.eventId,
+  );
+
   return Response.json(
     {
       status: "success",
       statusCode: 201,
-      data: body,
+      data: newTicket,
       error: null,
     },
     { status: 201 },
