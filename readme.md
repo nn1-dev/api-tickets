@@ -43,7 +43,7 @@ sequenceDiagram
 
 ```
 curl --request GET \
-  --url http://localhost:8000/123 \
+  --url http://localhost:8000/:eventId \
   --header 'Authorization: Bearer XXX'
 ```
 
@@ -66,7 +66,7 @@ sequenceDiagram
 
 ```
 curl --request GET \
-  --url http://localhost:8000/123/123 \
+  --url http://localhost:8000/:eventId/:ticketId \
   --header 'Authorization: Bearer XXX'
 ```
 
@@ -172,12 +172,8 @@ sequenceDiagram
 
 ```
 curl --request DELETE \
-  --url http://localhost:8000/123/123 \
+  --url http://localhost:8000/:eventId/:ticketId \
   --header 'Authorization: Bearer XXX' \
-  --header 'Content-Type: application/json' \
-  --data '{
-	"id": "XXX"
-}'
 ```
 
 ```mermaid
