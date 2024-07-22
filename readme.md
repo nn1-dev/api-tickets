@@ -39,6 +39,52 @@ sequenceDiagram
     end
 ```
 
+### GET /:eventId
+
+```
+curl --request GET \
+  --url http://localhost:8000/123 \
+  --header 'Authorization: Bearer XXX'
+```
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Api
+    participant Db as KV Database
+    Client->>Api: GET /:eventId
+    Api->>Db: kv.list()
+    Db->>Api: Entry[]
+    alt Unauthorized
+        Api->>Client: 401 Unauthorized
+    else OK
+        Api->>Client: 200 OK
+    end
+```
+
+### GET /:eventId/:ticketId
+
+```
+curl --request GET \
+  --url http://localhost:8000/123/123 \
+  --header 'Authorization: Bearer XXX'
+```
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Api
+    participant Db as KV Database
+    Client->>Api: GET /:eventId/:ticketId
+    Api->>Db: kv.get()
+    Db->>Api: Entry
+    alt Unauthorized
+        Api->>Client: 401 Unauthorized
+    else OK
+        Api->>Client: 200 OK
+    end
+```
+
 ### POST /
 
 ```
@@ -48,7 +94,10 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
 	"name": "Pablo Picasso",
-	"email": "pablo@picasso.com"
+	"email": "pablo@picasso.com",
+	"eventName": "#2: \"Design Secrets for Developers\" by Thomas Reeve and \"Type-safe localization of Unsplash.com\" by Oliver Ash",
+	"eventDate": "Thursday, 27/06/2024, 18:00",
+	"eventLocation": "Vulcan Works, 34-38 Guildhall Rd, Northampton, NN1 1EW"
 }'
 ```
 
@@ -58,10 +107,11 @@ sequenceDiagram
     participant Api
     participant Db as KV Database
     participant Resend
-    Client->>Api: GET /
+    Client->>Api: POST /
     Api->>Db: kv.set()
     Db->>Api: Entry
-    Api->>Resend: resend.emails.send()
+    Api->>Resend: resend.emails.send() (client)
+    Api->>Resend: resend.emails.send() (admins)
     alt Error
         Resend->>Api: 400 Error
     else OK
@@ -76,11 +126,53 @@ sequenceDiagram
     end
 ```
 
-### DELETE /
+### PUT /
+
+```
+curl --request PUT \
+  --url http://localhost:8000/ \
+  --header 'Authorization: Bearer XXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"ticketId": "123",
+	"ticketToken": "123",
+	"eventId": 123,
+	"eventName": "#2: \"Design Secrets for Developers\" by Thomas Reeve and \"Type-safe localization of Unsplash.com\" by Oliver Ash",
+	"eventDate": "Thursday, 27/06/2024, 18:00",
+	"eventLocation": "Vulcan Works, 34-38 Guildhall Rd, Northampton, NN1 1EW"
+}'
+```
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Api
+    participant Db as KV Database
+    participant Resend
+    Client->>Api: PUT /
+    Api->>Db: kv.set()
+    Db->>Api: Entry
+    Api->>Resend: resend.emails.send() (client)
+    Api->>Resend: resend.emails.send() (admins)
+    alt Error
+        Resend->>Api: 400 Error
+    else OK
+        Resend->>Api: 200 OK
+    end
+    alt Unauthorized
+        Api->>Client: 401 Unauthorized
+    else Error
+        Api->>Client: 400 Error
+    else OK
+        Api->>Client: 200 OK
+    end
+```
+
+### DELETE /:eventId/:ticketId
 
 ```
 curl --request DELETE \
-  --url http://localhost:8000/ \
+  --url http://localhost:8000/123/123 \
   --header 'Authorization: Bearer XXX' \
   --header 'Content-Type: application/json' \
   --data '{
