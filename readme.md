@@ -8,9 +8,10 @@ Local developement requires a few env variables:
 
 - `API_KEY` - Arbitrary string value, that needs to match `Authorization` bearer
 - `API_KEY_RESEND` - Ask Pawel, we will be happy to give it to contributors
+- `ADMIN_RECIPIENTS` - Comma-separated admin emails
 
 ```
-API_KEY=XXX API_KEY_RESEND=XXX deno run --unstable-kv --allow-env --allow-net index.ts
+API_KEY=XXX API_KEY_RESEND=XXX ADMIN_RECIPIENTS=XXX deno run --unstable-kv --allow-env --allow-net index.ts
 ```
 
 ## Endpoints
