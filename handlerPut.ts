@@ -1,7 +1,7 @@
 import { Resend } from "npm:resend";
 import { PREFIX } from "./constants.ts";
-import { renderEmailSignupSuccess } from "./emails/signup-success.tsx";
-import { renderEmailAdminSignupSuccess } from "./emails/admin-signup-success.tsx";
+import { renderEmailSignupSuccess } from "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx";
+import { renderEmailAdminSignupSuccess } from "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx";
 
 const resend = new Resend(Deno.env.get("API_KEY_RESEND"));
 
