@@ -78,6 +78,12 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
         subject: body.eventName,
         html: emailUser.html,
         text: emailUser.text,
+        attachments: [
+          {
+            path: `https://nn1.dev/events/${body.eventId}/invite.ics`,
+            filename: "invite.ics",
+          },
+        ],
       }),
       resend.emails.send({
         from: "NN1 Dev Club <club@nn1.dev>",
