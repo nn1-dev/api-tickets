@@ -16,6 +16,8 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     eventName: string;
     eventDate: string;
     eventLocation: string;
+    eventInviteUrlIcal: string;
+    eventInviteUrlGoogle: string;
   } = await request.json();
 
   const normalizedBodyName = normalizeName(body.name);
@@ -61,6 +63,8 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
         eventName: body.eventName,
         eventDate: body.eventDate,
         eventLocation: body.eventLocation,
+        eventInviteUrlIcal: body.eventInviteUrlIcal,
+        eventInviteUrlGoogle: body.eventInviteUrlGoogle,
       }),
       renderEmailAdminSignupSuccess({
         name: normalizedBodyName,
