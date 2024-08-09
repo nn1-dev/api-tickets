@@ -19,6 +19,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     eventInviteUrlIcal: string;
     eventInviteUrlGoogle: string;
   } = await request.json();
+  console.log(`✨ GET: ${request.url}, ${JSON.stringify(body)}`);
 
   const normalizedBodyName = normalizeName(body.name);
   const normalizedBodyEmail = normalizeEmail(body.email);
@@ -33,6 +34,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       value.email === normalizedBodyEmail && value.eventId === body.eventId,
   );
   if (ticketExist) {
+    console.log(`✨ 201`);
     return Response.json(
       {
         status: "success",
@@ -95,6 +97,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     ]);
 
     if (emailUserResponse.error || emailAdminResponse.error) {
+      console.log(`✨ 400`);
       return Response.json(
         {
           status: "error",
@@ -117,6 +120,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
         value.email === normalizedBodyEmail && value.eventId === body.eventId,
     );
 
+    console.log(`✨ 201`);
     return Response.json(
       {
         status: "success",
@@ -154,6 +158,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
   });
 
   if (error) {
+    console.log(`✨ 400`);
     return Response.json(
       {
         status: "error",
@@ -174,6 +179,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       value.email === normalizedBodyEmail && value.eventId === body.eventId,
   );
 
+  console.log(`✨ 201`);
   return Response.json(
     {
       status: "success",

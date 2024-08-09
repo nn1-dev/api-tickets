@@ -16,6 +16,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     eventInviteUrlIcal: string;
     eventInviteUrlGoogle: string;
   } = await request.json();
+  console.log(`✨ GET: ${request.url}, ${JSON.stringify(body)}`);
 
   const ticket = await kv.get<KvEntryTicket>([
     PREFIX,
@@ -24,6 +25,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
   ]);
 
   if (!ticket.value || ticket.value.token !== body.ticketToken) {
+    console.log(`✨ 400`);
     return Response.json(
       {
         status: "error",
@@ -79,6 +81,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     }),
   ]);
   if (emailUserResponse.error || emailAdminResponse.error) {
+    console.log(`✨ 400`);
     return Response.json(
       {
         status: "error",
@@ -89,6 +92,8 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
       { status: 400 },
     );
   }
+
+  console.log(`✨ 200`);
   return Response.json(
     {
       status: "success",
