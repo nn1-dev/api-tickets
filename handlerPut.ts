@@ -16,7 +16,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
     eventInviteUrlIcal: string;
     eventInviteUrlGoogle: string;
   } = await request.json();
-  console.log(`✨ GET: ${request.url}, ${JSON.stringify(body)}`);
+  console.log(`✨ PUT: ${request.url}, ${JSON.stringify(body)}`);
 
   const ticket = await kv.get<KvEntryTicket>([
     PREFIX,

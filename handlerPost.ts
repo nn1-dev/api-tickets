@@ -19,7 +19,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     eventInviteUrlIcal: string;
     eventInviteUrlGoogle: string;
   } = await request.json();
-  console.log(`✨ GET: ${request.url}, ${JSON.stringify(body)}`);
+  console.log(`✨ POST: ${request.url}, ${JSON.stringify(body)}`);
 
   const normalizedBodyName = normalizeName(body.name);
   const normalizedBodyEmail = normalizeEmail(body.email);
