@@ -6,6 +6,7 @@
       "npm:@react-email/button": "npm:@react-email/button@0.0.16_react@18.3.1",
       "npm:@react-email/container": "npm:@react-email/container@0.0.13_react@18.3.1",
       "npm:@react-email/head": "npm:@react-email/head@0.0.10_react@18.3.1",
+      "npm:@react-email/hr": "npm:@react-email/hr@0.0.8_react@18.3.1",
       "npm:@react-email/html": "npm:@react-email/html@0.0.9_react@18.3.1",
       "npm:@react-email/img": "npm:@react-email/img@0.0.9_react@18.3.1",
       "npm:@react-email/link": "npm:@react-email/link@0.0.9_react@18.3.1",
@@ -54,6 +55,12 @@
       },
       "@react-email/head@0.0.10_react@18.3.1": {
         "integrity": "sha512-VoH399w0/i3dJFnwH0Ixf9BTuiWhSA/y8PpsCJ7CPw8Mv8WNBqMAAsw0rmrITYI8uPd15LZ2zk2uwRDvqasMRw==",
+        "dependencies": {
+          "react": "react@18.3.1"
+        }
+      },
+      "@react-email/hr@0.0.8_react@18.3.1": {
+        "integrity": "sha512-JLVvpCg2wYKEB+n/PGCggWG9fRU5e4lxsGdpK5SDLsCL0ic3OLKSpHMfeE+ZSuw0GixAVVQN7F64PVJHQkd4MQ==",
         "dependencies": {
           "react": "react@18.3.1"
         }
@@ -478,13 +485,18 @@
     }
   },
   "redirects": {
+    "https://deno.land/x/sentry/index.mjs": "https://deno.land/x/sentry@8.25.0/index.mjs",
     "https://esm.sh/react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
     "https://esm.sh/v128/@types/react@~18.3/jsx-runtime~.d.ts": "https://esm.sh/v128/@types/react@18.2.38/jsx-runtime~.d.ts"
   },
   "remote": {
+    "https://deno.land/x/sentry@8.25.0/index.mjs": "89fb005a758d87e17dddd4ad4fcfb4ad7573afed6838a0cb4633cc62516bf8b9",
+    "https://deno.land/x/ulid@v0.3.0/mod.ts": "f7ff065b66abd485051fc68af23becef6ccc7e81f7774d7fcfd894a4b2da1984",
     "https://esm.sh/react@18.3.1/jsx-runtime": "f47f11639cc0531ad2f1e0f6334d9ae7a8d906c905d9b79cb2e8cd4331bc5b10",
     "https://esm.sh/stable/react@18.3.1/denonext/jsx-runtime.js": "5ff1e02a3bb5c69dd3535d77054b182f1ea51c5eeaf24a396984f6b7012c2716",
     "https://esm.sh/stable/react@18.3.1/denonext/react.mjs": "fc048ffc55366baf7669519127d186761db72046e2bebf35fe8d0de3964defa3",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx": "7da8d292850fa4838aef5bef5fcbba861a287b26b358df028a135bcb73649bf0",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-confirm.tsx": "5c298f6c28be2f763b9ed58675b731866980985322f10bedb628a6c4b78b49a5",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx": "df70abe6bd8ec3e0bb46cd2536e6eb819cc48cac575f1d7679ae78ffe934f199",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/style.tsx": "8d8a8080ca57d4d1896e9d530104b2e1dce18cca92380026bf70c9eab3b0e713"
   },
