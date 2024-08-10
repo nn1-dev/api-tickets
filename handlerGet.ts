@@ -13,10 +13,37 @@ const handlerGet = async (request: Request, kv: Deno.Kv) => {
     | number
   )[];
 
-  // const ticketsIterator = kv.list<KvEntryTicket>({ prefix });
-  const tickets = ticketId
-    ? await kv.get<KvEntryTicket>(key)
-    : await Array.fromAsync(kv.list<KvEntryTicket>({ prefix: key }));
+  if (ticketId) {
+    const ticket = await kv.get<KvEntryTicket>(key);
+
+    if (!ticket.value) {
+      console.log(`✨ 400`);
+      return Response.json(
+        {
+          status: "error",
+          statusCode: 400,
+          data: null,
+          error: "Ticket does not exists.",
+        },
+        { status: 400 },
+      );
+    }
+
+    console.log(`✨ 200`);
+    return Response.json(
+      {
+        status: "success",
+        statusCode: 200,
+        data: ticket,
+        error: null,
+      },
+      { status: 200 },
+    );
+  }
+
+  const tickets = await Array.fromAsync(
+    kv.list<KvEntryTicket>({ prefix: key }),
+  );
 
   console.log(`✨ 200`);
   return Response.json(
