@@ -12,6 +12,7 @@
       "npm:@react-email/link": "npm:@react-email/link@0.0.9_react@18.3.1",
       "npm:@react-email/render": "npm:@react-email/render@0.0.17_react@18.3.1_react-dom@18.3.1__react@18.3.1",
       "npm:@react-email/text": "npm:@react-email/text@0.0.9_react@18.3.1",
+      "npm:@sentry/deno": "npm:@sentry/deno@8.26.0",
       "npm:react": "npm:react@18.3.1",
       "npm:resend": "npm:resend@3.5.0_react@18.3.1"
     },
@@ -114,6 +115,31 @@
         "dependencies": {
           "domhandler": "domhandler@5.0.3",
           "selderee": "selderee@0.11.0"
+        }
+      },
+      "@sentry/core@8.26.0": {
+        "integrity": "sha512-g/tVmTZD4GNbLFf++hKJfBpcCAtduFEMLnbfa9iT/QEZjlmP+EzY+GsH9bafM5VsNe8DiOUp+kJKWtShzlVdBA==",
+        "dependencies": {
+          "@sentry/types": "@sentry/types@8.26.0",
+          "@sentry/utils": "@sentry/utils@8.26.0"
+        }
+      },
+      "@sentry/deno@8.26.0": {
+        "integrity": "sha512-fzSB8ojXwpX3x5TXe3PG7BAj0hAFx2I+zvHfgr/QXTgVnAf2Ia/NPJkNot7G5IHhl47c73q+OTwhMi+jwnoy5Q==",
+        "dependencies": {
+          "@sentry/core": "@sentry/core@8.26.0",
+          "@sentry/types": "@sentry/types@8.26.0",
+          "@sentry/utils": "@sentry/utils@8.26.0"
+        }
+      },
+      "@sentry/types@8.26.0": {
+        "integrity": "sha512-zKmh6SWsJh630rpt7a9vP4Cm4m1C2gDTUqUiH565CajCL/4cePpNWYrNwalSqsOSL7B9OrczA1+n6a6XvND+ng==",
+        "dependencies": {}
+      },
+      "@sentry/utils@8.26.0": {
+        "integrity": "sha512-xvlPU9Hd2BlyT+FhWHGNwnxWqdVRk2AHnDtVcW4Ma0Ri5EwS+uy4Jeik5UkSv8C5RVb9VlxFmS8LN3I1MPJsLw==",
+        "dependencies": {
+          "@sentry/types": "@sentry/types@8.26.0"
         }
       },
       "abbrev@2.0.0": {
