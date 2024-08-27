@@ -59,7 +59,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
       confirmed: true,
     });
 
-    const [emailUser, emailAdmin] = [
+    const [emailUser, emailAdmin] = await Promise.all([
       renderEmailSignupSuccess({
         eventUrl: `https://nn1.dev/events/${body.eventId}`,
         eventName: body.eventName,
@@ -72,7 +72,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
         name: normalizedBodyName,
         email: normalizedBodyEmail,
       }),
-    ];
+    ]);
     const [emailUserResponse, emailAdminResponse] = await Promise.all([
       resend.emails.send({
         from: "NN1 Dev Club <club@nn1.dev>",
@@ -144,7 +144,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
     confirmed: false,
   });
 
-  const email = renderEmailSignupConfirm({
+  const email = await renderEmailSignupConfirm({
     eventName: body.eventName,
     url: `https://nn1.dev/events/${body.eventId}/${ticketId}/${ticketToken}`,
   });

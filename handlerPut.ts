@@ -44,7 +44,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
   };
   await kv.set([PREFIX, body.eventId, body.ticketId], newValue);
 
-  const [emailUser, emailAdmin] = [
+  const [emailUser, emailAdmin] = await Promise.all([
     renderEmailSignupSuccess({
       eventUrl: `https://nn1.dev/events/${body.eventId}`,
       eventName: body.eventName,
@@ -57,7 +57,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
       name: ticket.value.name,
       email: ticket.value.email,
     }),
-  ];
+  ]);
   const [emailUserResponse, emailAdminResponse] = await Promise.all([
     resend.emails.send({
       from: "NN1 Dev Club <club@nn1.dev>",
