@@ -1,13 +1,13 @@
-// import * as Sentry from "https://deno.land/x/sentry@8.25.0/index.mjs";
+import * as Sentry from "https://deno.land/x/sentry@8.27.0/index.mjs";
 import handlerDelete from "./handlerDelete.ts";
 import handlerPost from "./handlerPost.ts";
 import handlerPut from "./handlerPut.ts";
 import handlerGet from "./handlerGet.ts";
 
-// Sentry.init({
-//   dsn: Deno.env.get("SENTRY_DSN"),
-//   tracesSampleRate: 1.0,
-// });
+Sentry.init({
+  dsn: Deno.env.get("SENTRY_DSN"),
+  tracesSampleRate: 1.0,
+});
 
 const kv = await Deno.openKv();
 
@@ -22,7 +22,7 @@ Deno.serve(async (request) => {
   const auth = request.headers.get("Authorization");
 
   if (auth !== `Bearer ${Deno.env.get("API_KEY")}`) {
-    // Sentry.captureException("Unauthorized API use");
+    Sentry.captureException("Unauthorized API use");
     return Response.json(
       {
         status: "error",
