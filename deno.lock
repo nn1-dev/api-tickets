@@ -467,8 +467,8 @@
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Socials.tsx": "2dd061ac6059009efd37ac3ab12076315cd248208324f7336526ed486678285c",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Text.tsx": "a8658593cd39330d205526e1f69fbb3b175c4bc8089ac06783da90fb2029f33e",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx": "d4f5a7922963d692c7323c11e4303ceff3efc831543b1ecb6666273662193666",
-    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-confirm.tsx": "6c853541970486f06c08f73ffb73b1f0fe3bec351a2e6e70af3dbdb3ca83cad6",
-    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx": "3756d496180cbac7a2ef1310f62b5c7f704332a1ef46a594934a00e3ee606815"
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-confirm.tsx": "9979ef97c35afbbc858bb1e7bafb0082d655a5c849323ea7d6e7045e96e82b92",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx": "10c4e810221439d4d81295f4c67fdba0ca6967e1b28f486bc5151bb6e26d37e3"
   },
   "workspace": {
     "dependencies": [
