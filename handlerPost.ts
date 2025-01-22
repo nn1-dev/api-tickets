@@ -1,7 +1,7 @@
 import { ulid } from "https://deno.land/x/ulid@v0.3.0/mod.ts";
 import { Resend } from "npm:resend";
 import { PREFIX } from "./constants.ts";
-import { normalizeName, normalizeEmail } from "./utils.ts";
+import { normalizeEmail, normalizeName } from "./utils.ts";
 import { renderEmailSignupConfirm } from "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-confirm.tsx";
 import { renderEmailSignupSuccess } from "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx";
 import { renderEmailAdminSignupSuccess } from "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx";
@@ -80,12 +80,6 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
         subject: body.eventName,
         html: emailUser.html,
         text: emailUser.text,
-        attachments: [
-          {
-            path: `https://nn1.dev/events/${body.eventId}/invite.ics`,
-            filename: "invite.ics",
-          },
-        ],
       }),
       resend.emails.send({
         from: "NN1 Dev Club <club@nn1.dev>",
