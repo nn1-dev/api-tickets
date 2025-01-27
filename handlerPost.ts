@@ -51,7 +51,9 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
   );
 
   if (emailPreviouslyConfirmed) {
-    await kv.set([PREFIX, body.eventId, ulid()], {
+    const ticketId = ulid();
+
+    await kv.set([PREFIX, body.eventId, ticketId], {
       timestamp: new Date().toISOString(),
       eventId: body.eventId,
       name: normalizedBodyName,
@@ -61,7 +63,7 @@ const handlerPost = async (request: Request, kv: Deno.Kv) => {
 
     const [emailUser, emailAdmin] = await Promise.all([
       renderEmailSignupSuccess({
-        eventUrl: `https://nn1.dev/events/${body.eventId}`,
+        ticketUrl: `https://nn1.dev/events/${body.eventId}/${ticketId}`,
         eventName: body.eventName,
         eventDate: body.eventDate,
         eventLocation: body.eventLocation,

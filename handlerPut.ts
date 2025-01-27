@@ -46,7 +46,7 @@ const handlerPut = async (request: Request, kv: Deno.Kv) => {
 
   const [emailUser, emailAdmin] = await Promise.all([
     renderEmailSignupSuccess({
-      eventUrl: `https://nn1.dev/events/${body.eventId}`,
+      ticketUrl: `https://nn1.dev/events/${body.eventId}/${body.ticketId}`,
       eventName: body.eventName,
       eventDate: body.eventDate,
       eventLocation: body.eventLocation,
