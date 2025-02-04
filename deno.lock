@@ -14,7 +14,7 @@
     "npm:@react-email/row@*": "0.0.12_react@19.0.0",
     "npm:@react-email/text@*": "0.0.11_react@19.0.0",
     "npm:react@*": "19.0.0",
-    "npm:resend@*": "4.1.1_react@19.0.0"
+    "npm:resend@*": "4.1.2_react@19.0.0"
   },
   "npm": {
     "@isaacs/cliui@8.0.2": {
@@ -371,8 +371,8 @@
     "react@19.0.0": {
       "integrity": "sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ=="
     },
-    "resend@4.1.1_react@19.0.0": {
-      "integrity": "sha512-nkcRpIOgPb3sFPA/GyOTr6Vmlrkhwsu+XlC20kKbbebOfw0WbAjbBbJ1m4AcjKOkPf57O4DH9Bnbxi9i18JYng==",
+    "resend@4.1.2_react@19.0.0": {
+      "integrity": "sha512-km0btrAj/BqIaRlS+SoLNMaCAUUWEgcEvZpycfVvoXEwAHCxU+vp/ikxPgKRkyKyiR2iDcdUq5uIBTDK9oSSSQ==",
       "dependencies": [
         "@react-email/render@1.0.1_react@19.0.0_react-dom@19.0.0__react@19.0.0"
       ]
@@ -386,8 +386,8 @@
         "parseley"
       ]
     },
-    "semver@7.6.3": {
-      "integrity": "sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A=="
+    "semver@7.7.1": {
+      "integrity": "sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA=="
     },
     "shebang-command@2.0.0": {
       "integrity": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
@@ -453,7 +453,6 @@
     }
   },
   "redirects": {
-    "https://esm.sh/@types/react@~19.0.7/jsx-runtime.d.ts": "https://esm.sh/@types/react@19.0.7/jsx-runtime.d.ts",
     "https://esm.sh/react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime"
   },
   "remote": {
@@ -465,9 +464,10 @@
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Hr.tsx": "4828c67a06553b50ef2425ee84e5b74ec7972d2a0d14b4d676795fab8eaaf155",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Layout.tsx": "18e81eb12f599c2672f4119bc73f00e93d214673aaa19a4bfcfb790c2c449aa1",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Link.tsx": "171907ef1266d39b3a109f85d2fdbf824203938101189f4160b96ddecc32f3fc",
-    "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Socials.tsx": "2dd061ac6059009efd37ac3ab12076315cd248208324f7336526ed486678285c",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Socials.tsx": "71c9c6fed78c26810fae29d5f4d174c8c587f8eabce8197daa0232ca25e8a721",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/components/Text.tsx": "a8658593cd39330d205526e1f69fbb3b175c4bc8089ac06783da90fb2029f33e",
-    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx": "d4f5a7922963d692c7323c11e4303ceff3efc831543b1ecb6666273662193666",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-cancel.tsx": "5f56707b75a3f06278cb974f267c0776cfce7018b29fa0e0a6c91b13abf3a1dc",
+    "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/admin-signup-success.tsx": "7e688adcc3bff804c0e7670156737c2fd31ca9145e07ef2b7cc8caf3500f949e",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-confirm.tsx": "9979ef97c35afbbc858bb1e7bafb0082d655a5c849323ea7d6e7045e96e82b92",
     "https://raw.githubusercontent.com/nn1-dev/emails/main/emails/signup-success.tsx": "18fabec08d9ad766fe82dc82c53d93d18c41a9818d9e7cf658cf4d58fb4fd93e"
   },
