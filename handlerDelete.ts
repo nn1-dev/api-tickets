@@ -45,7 +45,7 @@ const handlerDelete = async (request: Request, kv: Deno.Kv) => {
     );
   }
 
-  const email = renderEmailAdminSignupCancel({
+  const email = await renderEmailAdminSignupCancel({
     name: ticket.value.name,
     email: ticket.value.email,
   });
