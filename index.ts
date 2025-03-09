@@ -23,16 +23,6 @@ Deno.serve(async (request) => {
 
   if (auth !== `Bearer ${Deno.env.get("API_KEY")}`) {
     Sentry.captureException("Unauthorized API use");
-    console.log(`🚨 401`);
-    console.log({ method: request.method });
-    console.log({ referrer: request.referrer });
-    console.log({ mode: request.mode });
-    console.log({ redirect: request.redirect });
-    console.log({ body: request.body });
-    console.log({ headers: request.headers });
-    console.log({ destination: request.destination });
-    console.log({ credentials: request.credentials });
-    console.log({ url: request.url });
     return Response.json(
       {
         status: "error",
