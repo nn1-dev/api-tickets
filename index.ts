@@ -29,7 +29,6 @@ Deno.serve(async (request) => {
     console.log({ mode: request.mode });
     console.log({ redirect: request.redirect });
     console.log({ body: request.body });
-    console.log({ bodyJSON: await request.json() });
     console.log({ headers: request.headers });
     console.log({ destination: request.destination });
     console.log({ credentials: request.credentials });
