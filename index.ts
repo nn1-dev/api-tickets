@@ -24,6 +24,8 @@ Deno.serve(async (request) => {
   if (auth !== `Bearer ${Deno.env.get("API_KEY")}`) {
     Sentry.captureMessage("Unauthorized API use", "warning");
 
+    console.log({ auth: request.headers.get("Authorization") });
+
     return Response.json(
       {
         status: "error",
